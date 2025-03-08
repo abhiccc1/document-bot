@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Chat</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #f1f1f1;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #chat-window {
+            height: 400px;
+            width: 80%;
+            max-width: 600px;
+            overflow-y: scroll;
+            border: 1px solid #444;
+            background-color: #2c2c2c;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #input-container {
+            display: flex;
+            width: 80%;
+            max-width: 600px;
+            margin-bottom: 10px;
+        }
+        #question-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #444;
+            background-color: #3c3c3c;
+            color: #f1f1f1;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #5a5a5a;
+            color: #f1f1f1;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #6a6a6a;
+        }
+        p {
+            margin: 5px 0;
+        }
+        p strong {
+            color: #00d1b2;
+        }
+    </style>
+</head>
+<body>
+    <div id="itle">
+        <h3>Document Chat</h3>
+    </div>
+    <div id="chat-window"></div>
+    <div id="input-container">
+        <input type="text" id="question-input" placeholder="Ask a question...">
+        <button onclick="askQuestion()">Send</button>
+    </div>
+
+    <script>
+        function askQuestion() {
+            var question = $('#question-input').val();
+            if (question) {
+                $('#chat-window').append('<p><strong>You:</strong> ' + question + '</p>');
+                $.ajax({
+                    url: '/ask',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ question: question }),
+                    success: function(response) {
+                        $('#chat-window').append('<p><strong>AI:</strong> ' + response.answer + '</p>');
+                        $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
+                    }
+                });
+                $('#question-input').val('');
+            }
+        }
+
+        $('#question-input').keypress(function(e) {
+            if (e.which == 13) {
+                askQuestion();
+            }
+        });
+    </script>
+</body>
+</html>
