@@ -12,7 +12,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 app = Flask(__name__)
 
 # Set your OpenAI API key
-# os.environ["OPENAI_API_KEY"] = "sk-proj-jYXYHzg9BOUO02DW5k1RT3BlbkFJ07Oslv4oZQaDnda4ko2X"
+# os.environ["OPENAI_API_KEY"] = ""
 os.environ["USER_AGENT"] = "DocBot/1.0"
 
 # Initialize the RAG system
