@@ -14,7 +14,7 @@ app = Flask(__name__)
 os.environ["USER_AGENT"] = "DocBot/1.0"
 
 # Initialize the RAG system
-loader = WebBaseLoader("https://tradetron.tech/keyword/documentations")
+loader = WebBaseLoader("https://documentation-url.com")
 
 # Load the documents
 docs = loader.load()
