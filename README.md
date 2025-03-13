@@ -1,1 +1,1 @@
-Test RAG for a online documentation
+Simple RAG for a online documentation
